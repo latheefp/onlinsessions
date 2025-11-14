@@ -1,9 +1,43 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome to K8s Sessions</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: linear-gradient(to right, #4facfe, #00f2fe);
+                color: #fff;
+                text-align: center;
+                padding-top: 100px;
+            }
+            h1 {
+                font-size: 50px;
+            }
+            p {
+                font-size: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to K8s Sessions!</h1>
+        <p>Enjoy your Kubernetes journey 🚀</p>
+    </body>
+    </html>
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: demo
@@ -17,6 +51,14 @@ spec:
           image: nginx:1.25
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: html-volume
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+      volumes:
+        - name: html-volume
+          configMap:
+            name: demo-html
 ---
 apiVersion: v1
 kind: Service
@@ -36,6 +78,7 @@ kind: Ingress
 metadata:
   name: demo-ingress
 spec:
+  ingressClassName: nginx
   rules:
     - host: test.egrand.in
       http:
