@@ -28,6 +28,7 @@ data:
     </head>
     <body>
         <h1>Welcome to K8s Sessions!</h1>
+        <h1>Thank you for coming!</h1>
         <p>Enjoy your Kubernetes journey 🚀</p>
     </body>
     </html>
