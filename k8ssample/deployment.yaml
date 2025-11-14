@@ -115,10 +115,10 @@ spec:
     - host: test.egrand.in
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: demo-service
                 port:
                   number: 80
+            path: /
+            pathType: Prefix
