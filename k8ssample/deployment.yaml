@@ -111,7 +111,7 @@ kind: Ingress
 metadata:
   name: demo-ingress
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik   # <-- use the Traefik class
   rules:
     - host: test.egrand.in
       http:
